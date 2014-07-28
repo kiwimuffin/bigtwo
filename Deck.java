@@ -1,4 +1,4 @@
-package com.pslin.cards;
+package com.kiwimuffin.bigtwo;
 
 import java.util.ArrayList;
 import java.util.List;

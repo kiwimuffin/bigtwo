@@ -1,4 +1,4 @@
-package com.pslin.cards;
+package com.kiwimuffin.bigtwo;
 
 /**
  * Represents a single playing card.
