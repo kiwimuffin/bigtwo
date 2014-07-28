@@ -14,26 +14,26 @@ import java.util.Map;
 public class HandCompareUtils {
 
     public static void main(String[] args) {
-        Hand straight = CardGenerator.getStraight(3, 7);
-        System.out.println(straight.toString());
+//        Hand straight = CardGenerator.getStraight(3, 7);
+        Hand straight2 = CardGenerator.getStraight(5, 9);
+//        System.out.println(straight.toString());
 //        System.out.println(isStraight(straight));
 //
-        Hand flush = CardGenerator.getFlush(Card.Suit.SPADE);
-        System.out.println(flush.toString());
+//        Hand flush = CardGenerator.getFlush(Card.Suit.SPADE);
+//        System.out.println(flush.toString());
 //        System.out.println(isFlush(flush));
 
-        System.out.println(compareHands(straight, flush));
 //
 //        Hand random = CardGenerator.getFiveRandom();
 //        System.out.println(random.toString());
 //        System.out.println(isFlush(random));
 
-//        Hand fullHouse = CardGenerator.getFullHouse(14, 3);
+        Hand fullHouse = CardGenerator.getFullHouse(14, 3);
 //        System.out.println(fullHouse.toString());
 //        System.out.println(isFullHouse(fullHouse));
 //        System.out.println(isFourOfAKind(fullHouse));
 
-//        Hand royalFlush = CardGenerator.getRoyalFlush(Card.Suit.HEART);
+        Hand royalFlush = CardGenerator.getRoyalFlush(Card.Suit.HEART);
 //        System.out.println(royalFlush.toString());
 //        System.out.println(isRoyalFlush(royalFlush));
 
@@ -47,6 +47,8 @@ public class HandCompareUtils {
 
 //        Hand hand = CardGenerator.getFullHouse(3, 2);
 //        System.out.println(isTwoPairs(hand));
+
+        System.out.println(compareHands(royalFlush, straight2));
     }
 
     public static int compareHands(Hand hand1, Hand hand2) {
@@ -56,6 +58,9 @@ public class HandCompareUtils {
         if(hand1Cards.size() != hand2Cards.size()) {
             throw new RuntimeException("Cannot compare hands: different number of cards");
         }
+
+        determineHandRank(hand1);
+        determineHandRank(hand2);
 
         if(hand1.getRank().getRank() > hand2.getRank().getRank()) {
             return 1;
@@ -101,8 +106,44 @@ public class HandCompareUtils {
         return 0;
     }
 
-    public void determineHandRank(Hand hand) {
+    /**
+     * Determines the rank of the hand and sets it.
+     *
+     * @param hand
+     */
+    public static void determineHandRank(Hand hand) {
+        if(hand.getCards().size() == 2) {
+            if(isOnePair(hand)) {
+                hand.setRank(HandRank.PAIR);
+                return;
+            }
+        }
 
+        if(hand.getCards().size() == 3) {
+            if(isThreeOfAKind(hand)) {
+                hand.setRank(HandRank.TRIPLE);
+                return;
+            }
+        }
+
+        if(hand.getCards().size() == 5) {
+            if(isStraight(hand)) {
+                hand.setRank(HandRank.STRAIGHT);
+            } else if(isFlush(hand)) {
+                hand.setRank(HandRank.FLUSH);
+            } else if(isFullHouse(hand)) {
+                hand.setRank(HandRank.FULL_HOUSE);
+            } else if(isFourOfAKind(hand)) {
+                hand.setRank(HandRank.FOUR_OF_A_KIND);
+            } else if(isStraightFlush(hand)) {
+                hand.setRank(HandRank.STRAIGHT_FLUSH);
+            } else if(isRoyalFlush(hand)) {
+                hand.setRank(HandRank.ROYAL_FLUSH);
+            }
+            return;
+        }
+
+        hand.setRank(HandRank.HIGH_CARD);
     }
 
     /**
