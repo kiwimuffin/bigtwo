@@ -107,6 +107,24 @@ public class CardGenerator {
         return hand;
     }
 
+    public static Hand getFourOfAKind(int value, int fifthCardValue) {
+        Hand hand = new Hand();
+
+        Card club = new Card(value, Card.Suit.CLUB);
+        Card diamond = new Card(value, Card.Suit.DIAMOND);
+        Card heart = new Card(value, Card.Suit.HEART);
+        Card spade = new Card(value, Card.Suit.SPADE);
+        Card fifthCard = new Card(fifthCardValue, Card.Suit.CLUB);
+
+        hand.addCard(club);
+        hand.addCard(diamond);
+        hand.addCard(heart);
+        hand.addCard(spade);
+        hand.addCard(fifthCard);
+
+        return hand;
+    }
+
     /**
      * Get a hand consisting of five random cards.
      *

@@ -48,13 +48,28 @@ public class HandCompareUtils {
 //        Hand hand = CardGenerator.getFullHouse(3, 2);
 //        System.out.println(isTwoPairs(hand));
 
-        System.out.println(compareHands(royalFlush, straight2));
+        Hand four1 = CardGenerator.getFourOfAKind(14, 4);
+        Hand four2 = CardGenerator.getFourOfAKind(11, 9);
+
+        System.out.println(compareHands(four1, four2));
     }
 
+    /**
+     * Compare two hands and return an integer based on the result.
+     *
+     * Returns 1 if hand1 is ranked higher than hand2
+     * Returns -1 if hand1 is ranked lower than hand2
+     * Returns 0 if both hands are equally ranked
+     *
+     * @param hand1
+     * @param hand2
+     * @return 1, -1, or 0
+     */
     public static int compareHands(Hand hand1, Hand hand2) {
         List<Card> hand1Cards = hand1.getCards();
         List<Card> hand2Cards = hand2.getCards();
 
+        //TODO handle this differently
         if(hand1Cards.size() != hand2Cards.size()) {
             throw new RuntimeException("Cannot compare hands: different number of cards");
         }
@@ -89,7 +104,7 @@ public class HandCompareUtils {
                 return hand1HighCard.compareTo(hand2HighCard);
             }
 
-            // To determine rank, look at the value for the three of a kind for a full house
+            // To determine rank, look at the triple or quadruple value
             case FULL_HOUSE:
             case FOUR_OF_A_KIND:
             {
@@ -351,6 +366,12 @@ public class HandCompareUtils {
         return hand.getCards().size() == 3 && sameCards(hand) == 3;
     }
 
+    /**
+     * Determines if a hand is a four of a kind.
+     *
+     * @param hand
+     * @return true if hand is a four of a kind
+     */
     public static boolean isFourOfAKind(Hand hand) {
         return hand.getCards().size() == 5 && sameCards(hand) == 4;
     }
@@ -363,7 +384,7 @@ public class HandCompareUtils {
      * @param hand
      * @return the count of the highest number of identical cards
      */
-    public static int sameCards(Hand hand) {
+    private static int sameCards(Hand hand) {
         List<Card> cards = hand.getCards();
         Map<Integer, List<Card>> cardMap = new HashMap<>();
 
@@ -395,7 +416,7 @@ public class HandCompareUtils {
      * @param hand
      * @return integer representing the number of pairs in the hand
      */
-    public static int countPairs(Hand hand) {
+    private static int countPairs(Hand hand) {
         List<Card> cards = hand.getCards();
         Map<Integer, List<Card>> cardMap = new HashMap<>();
 
@@ -431,7 +452,7 @@ public class HandCompareUtils {
      * @param hand
      * @return list of highest cards
      */
-    public static List<Card> getHighestRankingCards(Hand hand) {
+    private static List<Card> getHighestRankingCards(Hand hand) {
         List<Card> highCards = new ArrayList<>();
 
         // Put the cards into a map
