@@ -1,6 +1,10 @@
 package com.kiwimuffin.bigtwo;
 
 /**
+ * Hand ranks represented by integers.
+ *
+ * Note: Two pairs and sometimes triples are not used in Big Two.
+ *
  * @author plin
  */
 public enum HandRank {

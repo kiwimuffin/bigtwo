@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * This class deals the deck among players.
+ *
  * @author plin
  */
 public class HandDealer {
